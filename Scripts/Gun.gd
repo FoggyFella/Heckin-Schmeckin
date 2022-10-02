@@ -11,7 +11,7 @@ func _physics_process(delta):
 	var look_vec = get_global_mouse_position() - global_position
 	rotation = atan2(look_vec.y,look_vec.x)
 	
-	if Input.is_action_just_pressed("fire"):
+	if Input.is_action_pressed("fire"):
 		fire()
 
 func fire():

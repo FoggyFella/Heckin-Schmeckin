@@ -12,6 +12,7 @@ var can_shoot = true
 var bullet = preload("res://Scenes/enemy_bullet.tscn")
 var direction_to_player = Vector2()
 var player = null
+var is_visisble = false
 var velocity = Vector2.ZERO
 
 func _ready():
@@ -25,7 +26,7 @@ func _physics_process(delta):
 		direction_to_player = Vector2(player.global_position - global_position)
 		velocity = direction_to_player.normalized() * speed
 		move_and_slide(velocity,Vector2.UP)
-		if can_shoot:
+		if can_shoot and is_visisble:
 			shoot()
 
 func shoot():
@@ -71,3 +72,11 @@ func take_damage(how_much):
 
 func _on_reload_timeout():
 	can_shoot = true
+
+
+func _on_VisibilityNotifier2D_screen_exited():
+	is_visisble = false
+
+
+func _on_VisibilityNotifier2D_screen_entered():
+	is_visisble = true

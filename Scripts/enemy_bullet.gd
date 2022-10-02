@@ -6,11 +6,14 @@ var player = null
 var lock_on = false
 var direction_to_player = Vector2()
 var velocity = Vector2.ZERO
+var visible_really = false
 
 func _ready():
 	damage = Global.stats["enemy_damage"]
 
 func _physics_process(delta):
+	if !visible_really:
+		queue_free()
 	damage = Global.stats["enemy_damage"]
 	if !lock_on:
 		velocity += Vector2(bullet_speed*delta,0).rotated(rotation)
@@ -24,5 +27,9 @@ func _physics_process(delta):
 			collision.get_collider().take_damage(damage)
 
 
-func _on_visible_on_screen_notifier_2d_screen_exited():
-	queue_free()
+func _on_VisibilityNotifier2D_screen_exited():
+	visible_really = false
+
+
+func _on_VisibilityNotifier2D_screen_entered():
+	visible_really = true
