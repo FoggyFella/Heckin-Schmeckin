@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Assets/bullet.png" type="Texture" id=1]
+[ext_resource path="res://Scripts/Bullet_Trail.gd" type="Script" id=2]
+[ext_resource path="res://Scripts/Bullet.gd" type="Script" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 2.044, 2.086 )
+
+[sub_resource type="Curve" id=2]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.372727 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=3]
+colors = PoolColorArray( 0.894531, 0.304492, 0.146759, 1, 0.953125, 0.716938, 0.0893555, 1 )
+
+[node name="Bullet" type="KinematicBody2D"]
+collision_layer = 4
+collision_mask = 16
+script = ExtResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( -9.53674e-07, 9.53674e-07 )
+scale = Vector2( 0.21875, 0.21875 )
+texture = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 1.06, -0.107 )
+shape = SubResource( 1 )
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+position = Vector2( 1.54, -0.075 )
+scale = Vector2( 0.15, 0.2 )
+rect = Rect2( -10.26, -10, 22.953, 20 )
+
+[node name="Line2D" type="Line2D" parent="."]
+show_behind_parent = true
+width_curve = SubResource( 2 )
+default_color = Color( 0.913725, 0.643137, 0.0627451, 1 )
+gradient = SubResource( 3 )
+script = ExtResource( 2 )
+lenght = 5.0
+
+[node name="timer_to_dissapear" type="Timer" parent="."]
+
+[connection signal="timeout" from="timer_to_dissapear" to="." method="_on_timer_to_dissapear_timeout"]
