@@ -1,0 +1,92 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Assets/Font/upheavtt.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Scripts/Textbox.gd" type="Script" id=2]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.0352941, 0.0666667, 0.0156863, 1 )
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color( 0.0941176, 0.937255, 0.266667, 1 )
+border_blend = true
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="DynamicFont" id=2]
+size = 25
+outline_size = 1
+outline_color = Color( 0.411765, 0.807843, 0.196078, 1 )
+font_data = ExtResource( 1 )
+
+[node name="Textbox" type="CanvasLayer"]
+pause_mode = 2
+script = ExtResource( 2 )
+
+[node name="TextContainer" type="MarginContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -496.0
+margin_top = -148.5
+margin_right = 496.0
+margin_bottom = 148.5
+
+[node name="Panel" type="Panel" parent="TextContainer"]
+margin_right = 992.0
+margin_bottom = 297.0
+custom_styles/panel = SubResource( 1 )
+
+[node name="MarginContainer" type="MarginContainer" parent="TextContainer"]
+margin_right = 992.0
+margin_bottom = 297.0
+custom_constants/margin_right = 8
+custom_constants/margin_top = 8
+custom_constants/margin_left = 8
+custom_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TextContainer/MarginContainer"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 984.0
+margin_bottom = 289.0
+
+[node name="Start" type="Label" parent="TextContainer/MarginContainer/HBoxContainer"]
+margin_right = 13.0
+margin_bottom = 23.0
+rect_min_size = Vector2( 7, 0 )
+size_flags_vertical = 0
+custom_fonts/font = SubResource( 2 )
+text = "*"
+
+[node name="Label2" type="Label" parent="TextContainer/MarginContainer/HBoxContainer"]
+margin_left = 17.0
+margin_right = 961.0
+margin_bottom = 281.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "amongus"
+autowrap = true
+clip_text = true
+
+[node name="End" type="Label" parent="TextContainer/MarginContainer/HBoxContainer"]
+margin_left = 965.0
+margin_top = 258.0
+margin_right = 976.0
+margin_bottom = 281.0
+rect_min_size = Vector2( 11, 0 )
+size_flags_vertical = 8
+custom_fonts/font = SubResource( 2 )
+text = ">"
+
+[node name="Tween" type="Tween" parent="."]
+
+[connection signal="tween_all_completed" from="Tween" to="." method="_on_Tween_tween_all_completed"]
+[connection signal="tween_completed" from="Tween" to="." method="_on_Tween_tween_completed"]

@@ -1,0 +1,191 @@
+[gd_scene load_steps=23 format=2]
+
+[ext_resource path="res://Assets/player-spritesheet.png" type="Texture" id=1]
+[ext_resource path="res://Scripts/player.gd" type="Script" id=2]
+[ext_resource path="res://Assets/gun sprite with hands-sheet.png" type="Texture" id=3]
+[ext_resource path="res://Scripts/Gun.gd" type="Script" id=4]
+[ext_resource path="res://Assets/flash_shader.gdshader" type="Shader" id=5]
+[ext_resource path="res://Assets/SFX/playershoot2.wav" type="AudioStream" id=6]
+[ext_resource path="res://Assets/SFX/playerhurt.wav" type="AudioStream" id=7]
+[ext_resource path="res://Scripts/ShakyCamera.gd" type="Script" id=8]
+[ext_resource path="res://Assets/SFX/player_shoot1.wav" type="AudioStream" id=9]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 7.0
+
+[sub_resource type="ShaderMaterial" id=10]
+resource_local_to_scene = true
+shader = ExtResource( 5 )
+shader_param/flash_color = Color( 1, 1, 1, 1 )
+shader_param/flash_modifier = 0.0
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 1 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 1 )
+region = Rect2( 32, 32, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=6]
+animations = [ {
+"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="ShaderMaterial" id=11]
+resource_local_to_scene = true
+shader = ExtResource( 5 )
+shader_param/flash_color = Color( 1, 1, 1, 1 )
+shader_param/flash_modifier = 0.0
+
+[sub_resource type="Animation" id=12]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=13]
+resource_name = "Shoot"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4 ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "Idle"
+length = 0.3
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=8]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1 ]
+}
+
+[sub_resource type="Animation" id=9]
+resource_name = "Walk"
+length = 0.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 2, 3 ]
+}
+
+[node name="Player" type="KinematicBody2D"]
+z_index = 1
+collision_layer = 2
+collision_mask = 25
+script = ExtResource( 2 )
+speed = 150.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="AnimatedSprite" parent="."]
+material = SubResource( 10 )
+frames = SubResource( 6 )
+frame = 1
+
+[node name="Gun" type="Sprite" parent="."]
+material = SubResource( 11 )
+texture = ExtResource( 3 )
+flip_h = true
+hframes = 5
+script = ExtResource( 4 )
+
+[node name="Position2D" type="Position2D" parent="Gun"]
+position = Vector2( 11.575, -2.521 )
+
+[node name="shoot1" type="AudioStreamPlayer" parent="Gun"]
+stream = ExtResource( 9 )
+volume_db = -8.0
+bus = "New Bus"
+
+[node name="shoot2" type="AudioStreamPlayer" parent="Gun"]
+stream = ExtResource( 6 )
+volume_db = -8.0
+bus = "New Bus"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Gun"]
+anims/RESET = SubResource( 12 )
+anims/Shoot = SubResource( 13 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Idle = SubResource( 7 )
+anims/RESET = SubResource( 8 )
+anims/Walk = SubResource( 9 )
+
+[node name="gun timeout" type="Timer" parent="."]
+wait_time = 0.32
+one_shot = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+zoom = Vector2( 0.6, 0.6 )
+smoothing_enabled = true
+script = ExtResource( 8 )
+RANDOM_SHAKE_STRENGTH = 5.0
+
+[node name="hurt" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+volume_db = -8.739
+
+[connection signal="timeout" from="gun timeout" to="Gun" method="_on_gun_timeout_timeout"]

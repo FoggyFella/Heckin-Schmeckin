@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Scripts/Bullet_Trail.gd" type="Script" id=1]
+[ext_resource path="res://Assets/enemy_bullet.png" type="Texture" id=2]
+[ext_resource path="res://Scripts/enemy_bullet.gd" type="Script" id=3]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 4.74516
+
+[sub_resource type="Curve" id=2]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.667045 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=3]
+colors = PoolColorArray( 0.860352, 0.144512, 0.383591, 1, 0.791504, 0.0803871, 0.667892, 1 )
+
+[node name="Enemy_bullet" type="KinematicBody2D" groups=["enemy_bullets"]]
+z_index = 2
+collision_layer = 8
+collision_mask = 2
+script = ExtResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 0.23, 0.23 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2( -0.195, -0.1 )
+scale = Vector2( 1.095, 1.101 )
+shape = SubResource( 1 )
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+visible = false
+position = Vector2( -0.773, -0.162 )
+scale = Vector2( 0.206, 0.255 )
+rect = Rect2( -10.26, -10, 26.052, 21.28 )
+
+[node name="Line2D" type="Line2D" parent="."]
+show_behind_parent = true
+width_curve = SubResource( 2 )
+default_color = Color( 0.788235, 0.0980392, 0.811765, 1 )
+gradient = SubResource( 3 )
+script = ExtResource( 1 )
+lenght = 15.0
+
+[connection signal="screen_entered" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_entered"]
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
