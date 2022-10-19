@@ -62,6 +62,7 @@ var wrDeleteScore = null
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
+#	pause_mode = Node.PAUSE_MODE_PROCESS 
 	#connect("request_completed", self, "_on_Scores_request_completed")
 	#setup_request_timer()
 	
@@ -117,6 +118,7 @@ func get_scores_around(score, scores_to_fetch=3, ldboard_name="main"):
 
 func get_high_scores(maximum=10, ldboard_name="main", period_offset=0):
 	HighScores = HTTPRequest.new()
+	HighScores.pause_mode = Node.PAUSE_MODE_PROCESS
 	wrHighScores = weakref(HighScores)
 	if OS.get_name() != "HTML5":
 		HighScores.set_use_threads(true)
@@ -179,6 +181,7 @@ func persist_score(player_name, score, ldboard_name="main", metadata={}):
 		SWLogger.error("ERROR in SilentWolf.Scores.persist_score - metadata must be a dictionary")
 	else:
 		PostScore = HTTPRequest.new()
+		PostScore.pause_mode = Node.PAUSE_MODE_PROCESS
 		wrPostScore = weakref(PostScore)
 		if OS.get_name() != "HTML5":
 			PostScore.set_use_threads(true)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Scripts/Enemy.gd" type="Script" id=1]
 [ext_resource path="res://Assets/enemy-sheet.png" type="Texture" id=2]
@@ -73,6 +73,9 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3 ]
 }
 
+[sub_resource type="RectangleShape2D" id=10]
+extents = Vector2( 15.5391, 14.592 )
+
 [node name="Enemy" type="KinematicBody2D" groups=["enemy_group"]]
 z_index = 2
 collision_layer = 16
@@ -85,7 +88,6 @@ scale = Vector2( 0.55, 0.55 )
 frames = SubResource( 7 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource( 1 )
 
 [node name="Position2D" type="Position2D" parent="."]
@@ -132,7 +134,20 @@ texture_under = ExtResource( 7 )
 texture_progress = ExtResource( 8 )
 nine_patch_stretch = true
 
+[node name="bite_timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2( -0.35444, -0.135602 )
+shape = SubResource( 10 )
+
 [connection signal="timeout" from="reload" to="." method="_on_reload_timeout"]
 [connection signal="screen_entered" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_entered"]
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
 [connection signal="timeout" from="timer2" to="." method="_on_timer2_timeout"]
+[connection signal="timeout" from="bite_timer" to="." method="_on_bite_timer_timeout"]

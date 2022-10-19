@@ -7,6 +7,7 @@ export var min_speed : float = 50
 export var max_speed : float = 85
 export var min_wait : float = 2
 export var max_wait : float = 4
+export var bite_damage : int = 5
 
 var stun = false
 var can_shoot = true
@@ -14,24 +15,44 @@ var direction_to_player = Vector2()
 var player = null
 var is_visisble = false
 var velocity = Vector2.ZERO
+var can_bite = true
 
 var number_of_damage = preload("res://Scenes/NumberPopup.tscn")
 var bullet = preload("res://Scenes/enemy_bullet.tscn")
 var blood = preload("res://Scenes/BloodParticles.tscn")
+var sprite_size_x = null
 
 func _ready():
+	sprite_size_x = $Sprite.scale.x
 	$HealthBar.max_value = health
 	$HealthBar.value = health
 	health = Global.stats["enemy_health"]
 	scale.x = rand_range(0.8,1)
 	scale.y = scale.x
 	speed = Global.stats["enemy_speed"] - rand_range(0,20)
+	player = Global.player
 
 func _physics_process(delta):
+	var overlapping_bodies = $Hitbox.get_overlapping_bodies()
+	for i in overlapping_bodies:
+		if stun == false:
+			take_damage(i.damage)
+			i.queue_free()
 	if player != null and stun == false:
 		direction_to_player = Vector2(player.global_position - global_position)
 		velocity = direction_to_player.normalized() * speed
 		move_and_slide(velocity,Vector2.UP)
+		if direction_to_player.x < 0:
+			$Sprite.scale.x = lerp($Sprite.scale.x,-sprite_size_x,0.27)
+		else:
+			$Sprite.scale.x = lerp($Sprite.scale.x,sprite_size_x,0.27)
+		for i in get_slide_count():
+			var collision = get_slide_collision(i)
+			if collision.get_collider().has_method("take_damage") and collision.get_collider().name == "Player":
+				if can_bite:
+					can_bite = false
+					$bite_timer.start()
+					collision.get_collider().take_damage(bite_damage)
 		if can_shoot and is_visisble:
 			shoot()
 
@@ -133,3 +154,7 @@ func show_health_bar():
 
 func update_health_bar(amount_of_damage):
 	$HealthBar.value = health - amount_of_damage
+
+
+func _on_bite_timer_timeout():
+	can_bite = true

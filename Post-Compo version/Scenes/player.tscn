@@ -174,7 +174,7 @@ anims/RESET = SubResource( 8 )
 anims/Walk = SubResource( 9 )
 
 [node name="gun timeout" type="Timer" parent="."]
-wait_time = 0.32
+wait_time = 0.35
 one_shot = true
 
 [node name="Camera2D" type="Camera2D" parent="."]

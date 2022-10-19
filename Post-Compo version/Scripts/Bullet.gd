@@ -17,11 +17,11 @@ func _physics_process(delta):
 #		if collision.get_collider().has_method("take_damage"):
 #			queue_free()
 #			collision.get_collider().take_damage(damage)
-	if info != null:
-		if info.collider.has_method("take_damage"):
-			queue_free()
-			if !info.collider.stun:
-				info.collider.take_damage(damage)
+#	if info != null:
+#		if info.collider.has_method("take_damage"):
+#			queue_free()
+#			if !info.collider.stun:
+#				info.collider.take_damage(damage)
 	
 func _on_visible_on_screen_notifier_2d_screen_exited():
 	$timer_to_dissapear.start()

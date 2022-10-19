@@ -64,18 +64,18 @@ func hide_processing_label():
 
 
 func _on_UsernameToolButton_mouse_entered():
-	$"FormContainer/InfoBox".text = "Username should contain at least 6 characters (letters or numbers) and no spaces."
-	$"FormContainer/InfoBox".show()
+	$InfoBox.text = "Username should contain at least 6 characters (letters or numbers) and no spaces."
+	$InfoBox.show()
 
 
 func _on_UsernameToolButton_mouse_exited():
-	$"FormContainer/InfoBox".hide()
+	$InfoBox.hide()
 
 
 func _on_PasswordToolButton_mouse_entered():
-	$"FormContainer/InfoBox".text = "Password should contain at least 8 characters including uppercase and lowercase letters, numbers and (optionally) special characters."
-	$"FormContainer/InfoBox".show()
+	$InfoBox.text = "Password should contain at least 8 characters including uppercase and lowercase letters, numbers and (optionally) special characters."
+	$InfoBox.show()
 
 
 func _on_PasswordToolButton_mouse_exited():
-	$"FormContainer/InfoBox".hide()
+	$InfoBox.hide()

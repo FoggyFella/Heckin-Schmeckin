@@ -6,6 +6,13 @@ onready var ui = $"../UI"
 var velocity = Vector2.ZERO
 onready var hurt = $hurt
 
+var number_of_damage = preload("res://Scenes/NumberPopup.tscn")
+
+func _ready():
+	Global.player = self
+func _exit_tree():
+	Global.player = null
+
 func _physics_process(delta):
 	speed = Global.stats["player_speed"]
 	Global.stats["player_health"]
@@ -27,9 +34,17 @@ func _physics_process(delta):
 		$AnimationPlayer.play("Walk")
 	velocity = movement * speed
 	move_and_slide(velocity,Vector2.UP)
-	if Input.is_action_just_pressed("ui_up"):
-		take_damage(1000)
+#	if Input.is_action_just_pressed("ui_up"):
+#		take_damage(1000)
 func take_damage(amount):
+	if ui != null:
+		ui.player_got_damaged()
+	randomize()
+	var numb_inst = number_of_damage.instance()
+	numb_inst.amount = amount
+	numb_inst.type == "Red"
+	numb_inst.position = self.position
+	get_tree().root.add_child(numb_inst)
 	$Camera2D.NOISE_SHAKE_STRENGTH = rand_range(7,10)
 	$Camera2D.apply_noise_shake()
 	$hurt.play()

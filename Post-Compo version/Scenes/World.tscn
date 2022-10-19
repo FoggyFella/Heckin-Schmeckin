@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=2]
+[gd_scene load_steps=51 format=2]
 
 [ext_resource path="res://Scenes/player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/fill.png" type="Texture" id=2]
@@ -274,6 +274,12 @@ outline_size = 3
 outline_color = Color( 0.733333, 0.913725, 0.160784, 1 )
 font_data = ExtResource( 7 )
 
+[sub_resource type="DynamicFont" id=36]
+size = 50
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 7 )
+
 [sub_resource type="DynamicFont" id=16]
 size = 35
 outline_size = 2
@@ -397,6 +403,30 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
+[sub_resource type="StyleBoxFlat" id=39]
+bg_color = Color( 0.929412, 0.172549, 0.172549, 1 )
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color( 1, 0.623529, 0.623529, 1 )
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id=38]
+bg_color = Color( 0.972549, 0.282353, 0.282353, 1 )
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color( 1, 0.623529, 0.623529, 1 )
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
 [sub_resource type="StyleBoxFlat" id=28]
 bg_color = Color( 0.152941, 0.152941, 0.152941, 1 )
 border_width_left = 5
@@ -455,6 +485,12 @@ corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
+
+[sub_resource type="DynamicFont" id=37]
+size = 35
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 7 )
 
 [node name="World" type="Node2D"]
 script = ExtResource( 5 )
@@ -528,6 +564,7 @@ margin_left = 6.0
 margin_top = -61.0
 margin_right = 358.0
 margin_bottom = -3.0
+rect_pivot_offset = Vector2( 176, 29 )
 custom_colors/font_color = Color( 0.968627, 1, 0.94902, 1 )
 custom_colors/font_outline_modulate = Color( 0.156863, 0.917647, 0.113725, 1 )
 custom_colors/font_color_shadow = Color( 0.141176, 0.580392, 0.0627451, 1 )
@@ -535,6 +572,23 @@ custom_constants/shadow_offset_x = 2
 custom_constants/shadow_offset_y = 2
 custom_fonts/font = SubResource( 13 )
 text = "HEALTH: 100"
+
+[node name="Label4" type="Label" parent="UI"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -266.0
+margin_top = 12.0
+margin_right = 266.0
+margin_bottom = 70.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0.392157, 0.392157, 0.392157, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
+custom_fonts/font = SubResource( 36 )
+text = "00:00:00"
+align = 1
+valign = 1
 
 [node name="Label3" type="Label" parent="UI"]
 anchor_left = 1.0
@@ -759,6 +813,7 @@ margin_bottom = 214.5
 custom_styles/panel = SubResource( 25 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/DeathScreen/SubmitScorePanel"]
+pause_mode = 2
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -769,6 +824,7 @@ margin_right = 367.5
 margin_bottom = 26.5
 
 [node name="Label3" type="Label" parent="UI/DeathScreen/SubmitScorePanel/VBoxContainer"]
+pause_mode = 2
 margin_right = 737.0
 margin_bottom = 36.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
@@ -782,6 +838,7 @@ align = 1
 valign = 1
 
 [node name="Label4" type="Label" parent="UI/DeathScreen/SubmitScorePanel/VBoxContainer"]
+pause_mode = 2
 margin_top = 40.0
 margin_right = 737.0
 margin_bottom = 76.0
@@ -796,6 +853,7 @@ align = 1
 valign = 1
 
 [node name="Label5" type="RichTextLabel" parent="UI/DeathScreen/SubmitScorePanel/VBoxContainer"]
+pause_mode = 2
 modulate = Color( 1, 1, 1, 0 )
 margin_top = 80.0
 margin_right = 737.0
@@ -834,6 +892,7 @@ custom_styles/normal = SubResource( 24 )
 text = "SUBMIT SCORE"
 
 [node name="LineEdit" type="LineEdit" parent="UI/DeathScreen/SubmitScorePanel"]
+pause_mode = 2
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -852,7 +911,22 @@ placeholder_text = "ENTER HERE"
 placeholder_alpha = 0.8
 caret_blink = true
 
+[node name="CloseButton" type="Button" parent="UI/DeathScreen/SubmitScorePanel"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -77.0
+margin_top = 30.0
+margin_right = -30.0
+margin_bottom = 75.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 26 )
+custom_styles/hover = SubResource( 39 )
+custom_styles/pressed = SubResource( 39 )
+custom_styles/normal = SubResource( 38 )
+text = "X"
+
 [node name="Leaderboard" type="Panel" parent="UI/DeathScreen"]
+pause_mode = 2
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -860,28 +934,33 @@ custom_styles/panel = SubResource( 28 )
 script = ExtResource( 12 )
 
 [node name="Board" type="VBoxContainer" parent="UI/DeathScreen/Leaderboard"]
+pause_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_constants/separation = 10
 
 [node name="TitleContainer" type="CenterContainer" parent="UI/DeathScreen/Leaderboard/Board"]
+pause_mode = 2
 margin_right = 1024.0
 margin_bottom = 46.0
 
 [node name="Label" type="Label" parent="UI/DeathScreen/Leaderboard/Board/TitleContainer"]
-margin_left = 243.0
-margin_right = 780.0
+pause_mode = 2
+margin_left = 235.0
+margin_right = 789.0
 margin_bottom = 46.0
 custom_fonts/font = SubResource( 29 )
-text = "Leaderboard (TOP 10)"
+text = "Leaderboard (TOP 50)"
 
 [node name="MessageContainer" type="CenterContainer" parent="UI/DeathScreen/Leaderboard/Board"]
+pause_mode = 2
 visible = false
 margin_top = 56.0
 margin_right = 1024.0
 margin_bottom = 84.0
 
 [node name="TextMessage" type="Label" parent="UI/DeathScreen/Leaderboard/Board/MessageContainer"]
+pause_mode = 2
 margin_left = 381.0
 margin_right = 643.0
 margin_bottom = 28.0
@@ -890,33 +969,28 @@ text = "Loading scores..."
 valign = 1
 
 [node name="HighScores" type="CenterContainer" parent="UI/DeathScreen/Leaderboard/Board"]
+pause_mode = 2
 margin_top = 56.0
 margin_right = 1024.0
-margin_bottom = 156.0
+margin_bottom = 456.0
 rect_min_size = Vector2( 0, 100 )
 theme = SubResource( 31 )
 
-[node name="ScoreItemContainer" type="VBoxContainer" parent="UI/DeathScreen/Leaderboard/Board/HighScores"]
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/DeathScreen/Leaderboard/Board/HighScores"]
+pause_mode = 2
 margin_left = 512.0
-margin_top = 50.0
 margin_right = 512.0
-margin_bottom = 50.0
+margin_bottom = 400.0
+rect_min_size = Vector2( 0, 400 )
+scroll_horizontal_enabled = false
 
-[node name="CloseButtonContainer" type="CenterContainer" parent="UI/DeathScreen/Leaderboard/Board"]
-margin_top = 166.0
-margin_right = 1024.0
-margin_bottom = 245.0
-
-[node name="CloseButton" parent="UI/DeathScreen/Leaderboard/Board/CloseButtonContainer" instance=ExtResource( 13 )]
-margin_left = 315.0
-margin_right = 709.0
-margin_bottom = 79.0
-custom_fonts/font = SubResource( 22 )
-custom_styles/hover = SubResource( 32 )
-custom_styles/pressed = SubResource( 32 )
-text = "Close Leaderboard"
+[node name="ScoreItemContainer" type="VBoxContainer" parent="UI/DeathScreen/Leaderboard/Board/HighScores/ScrollContainer"]
+pause_mode = 2
+margin_bottom = 400.0
+size_flags_vertical = 3
 
 [node name="Button" type="Button" parent="UI/DeathScreen/Leaderboard"]
+pause_mode = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 margin_left = 20.0
@@ -930,12 +1004,33 @@ custom_styles/pressed = SubResource( 32 )
 custom_styles/normal = SubResource( 35 )
 text = "REFRESH"
 
+[node name="CloseButtonContainer" type="CenterContainer" parent="UI/DeathScreen/Leaderboard"]
+pause_mode = 2
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -197.0
+margin_top = -97.0
+margin_right = 197.0
+margin_bottom = -18.0
+
+[node name="CloseButton" parent="UI/DeathScreen/Leaderboard/CloseButtonContainer" instance=ExtResource( 13 )]
+pause_mode = 2
+margin_right = 394.0
+margin_bottom = 79.0
+custom_fonts/font = SubResource( 37 )
+custom_styles/hover = SubResource( 32 )
+custom_styles/pressed = SubResource( 32 )
+text = "Close Leaderboard"
+
 [node name="EnemySpawnerCircle" type="Line2D" parent="."]
 visible = false
 points = PoolVector2Array( -557, 443, -380, 536, -118, 564, 200, 568, 555, 491, 777, 320, 813, 31, 801, -209, 731, -393, 216, -456, -87, -423, -514, -374, -649, -191, -653, 95, -656, 304, -582, 420 )
 script = ExtResource( 8 )
 
 [node name="Timer" type="Timer" parent="EnemySpawnerCircle"]
+one_shot = true
 
 [node name="PickUpSpawnLine" type="Line2D" parent="."]
 visible = false
@@ -952,6 +1047,7 @@ z_index = 2
 [connection signal="pressed" from="UI/DeathScreen/SubmitScorePanel/ActualSubmitScore" to="UI" method="_on_ActualSubmitScore_pressed"]
 [connection signal="text_changed" from="UI/DeathScreen/SubmitScorePanel/LineEdit" to="UI" method="_on_LineEdit_text_changed"]
 [connection signal="text_entered" from="UI/DeathScreen/SubmitScorePanel/LineEdit" to="UI" method="_on_LineEdit_text_entered"]
-[connection signal="pressed" from="UI/DeathScreen/Leaderboard/Board/CloseButtonContainer/CloseButton" to="UI/DeathScreen/Leaderboard" method="_on_CloseButton_pressed"]
+[connection signal="pressed" from="UI/DeathScreen/SubmitScorePanel/CloseButton" to="UI" method="_on_CloseButton_pressed"]
 [connection signal="pressed" from="UI/DeathScreen/Leaderboard/Button" to="UI/DeathScreen/Leaderboard" method="_on_Button_pressed"]
+[connection signal="pressed" from="UI/DeathScreen/Leaderboard/CloseButtonContainer/CloseButton" to="UI/DeathScreen/Leaderboard" method="_on_CloseButton_pressed"]
 [connection signal="timeout" from="EnemySpawnerCircle/Timer" to="EnemySpawnerCircle" method="_on_Timer_timeout"]

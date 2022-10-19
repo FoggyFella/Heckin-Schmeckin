@@ -9,8 +9,6 @@ var list_index = 0
 var ld_name = "main"
 
 func _ready():
-	print("SilentWolf.Scores.leaderboards: " + str(SilentWolf.Scores.leaderboards))
-	print("SilentWolf.Scores.ldboard_config: " + str(SilentWolf.Scores.ldboard_config))
 	#var scores = SilentWolf.Scores.scores
 	var scores = []
 	if ld_name in SilentWolf.Scores.leaderboards:
@@ -22,7 +20,7 @@ func _ready():
 	else:
 		# use a signal to notify when the high scores have been returned, and show a "loading" animation until it's the case...
 		add_loading_scores_message()
-		yield(SilentWolf.Scores.get_high_scores(), "sw_scores_received")
+		yield(SilentWolf.Scores.get_high_scores(50), "sw_scores_received")
 		hide_message()
 		render_board(SilentWolf.Scores.scores, local_scores)
 
@@ -53,7 +51,7 @@ func is_default_leaderboard(ld_config):
 
 
 
-func merge_scores_with_local_scores(scores, local_scores, max_scores=10):
+func merge_scores_with_local_scores(scores, local_scores, max_scores=50):
 	if local_scores:
 		for score in local_scores:
 			var in_array = score_in_score_array(scores, score)
@@ -91,7 +89,7 @@ func add_item(player_name, score):
 	item.get_node("PlayerName").text = str(list_index) + str(". ") + player_name
 	item.get_node("Score").text = score
 	item.margin_top = list_index * 100
-	$"Board/HighScores/ScoreItemContainer".add_child(item)
+	$"Board/HighScores/ScrollContainer/ScoreItemContainer".add_child(item)
 
 
 func add_no_scores_message():
@@ -113,7 +111,7 @@ func hide_message():
 
 
 func clear_leaderboard():
-	var score_item_container = $"Board/HighScores/ScoreItemContainer"
+	var score_item_container = $"Board/HighScores/ScrollContainer/ScoreItemContainer"
 	if score_item_container.get_child_count() > 0:
 		var children = score_item_container.get_children()
 		for c in children:
@@ -125,13 +123,18 @@ func _on_CloseButton_pressed():
 
 
 func _on_Button_pressed():
-	list_index = 0
 	clear_leaderboard()
+	list_index = 0
 	var scores = []
 	if ld_name in SilentWolf.Scores.leaderboards:
 		scores = SilentWolf.Scores.leaderboards[ld_name]
 	var local_scores = SilentWolf.Scores.local_scores
-	add_loading_scores_message()
-	yield(SilentWolf.Scores.get_high_scores(), "sw_scores_received")
-	hide_message()
-	render_board(SilentWolf.Scores.scores, local_scores)
+	
+	if len(scores) > 0: 
+		render_board(scores, local_scores)
+	else:
+		# use a signal to notify when the high scores have been returned, and show a "loading" animation until it's the case...
+		add_loading_scores_message()
+		yield(SilentWolf.Scores.get_high_scores(50), "sw_scores_received")
+		hide_message()
+		render_board(SilentWolf.Scores.scores, local_scores)

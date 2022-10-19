@@ -5,7 +5,11 @@ var bullet = preload("res://Scenes/Bullet.tscn")
 onready var gun_timeout = $"../gun timeout"
 var rots = [0]
 var look_vec = null
+var firerate = 0.35
 onready var camera = $"../Camera2D"
+
+func _ready():
+	Global.connect("pick_up_collected",self,"update_self_stats")
 
 func _physics_process(delta):
 	look_vec = get_global_mouse_position() - global_position
@@ -22,6 +26,7 @@ func _physics_process(delta):
 
 func fire():
 	if can_fire:
+		can_fire = false
 		$AnimationPlayer.play("Shoot")
 		randomize()
 		var random_numbah = int(rand_range(1,2))
@@ -35,10 +40,10 @@ func fire():
 			bullet_instance.global_rotation = global_rotation + rots[i]
 			bullet_instance.global_position = $Position2D.global_position
 			get_tree().root.add_child(bullet_instance)
-			can_fire = false
-			gun_timeout.start()
+			gun_timeout.start(firerate)
 
-
+func update_self_stats():
+	firerate = Global.stats["player_firerate"]
 
 func _on_gun_timeout_timeout():
 	can_fire = true

@@ -3,6 +3,7 @@ extends Node2D
 var pick_up = preload("res://Scenes/pick_up.tscn")
 
 func _ready():
+	Global.timer_on = true
 	if Music.playing == false and Music.volume_db == -60:
 		Music.volume_db = -10
 		Music.playing = true
