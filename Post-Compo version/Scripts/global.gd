@@ -28,8 +28,8 @@ func _ready():
 #here you should configure the silentwolf with your api key and game id
 #i didn't include my keys for security reasons
 	SilentWolf.configure({
-		"api_key": "l9LNd7SqxqaTnbftLhYTjaIj8iQYotNva2dkCJAf",
-		"game_id": "heckinschmeckin",
+		"api_key": "APIKEY",
+		"game_id": "GAMEID",
 		"game_version": "1.0",
 		"log_level": 0
 	})
